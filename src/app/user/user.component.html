@@ -1,0 +1,133 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h5 class="box-title">User Management</h5>
+                        <button class="btn btn-mdb-color btn-rounded btn-sm my-0 ml-sm-2" style="float: right;" type="submit">Search</button>
+                        <div class="btn-group" style="float: right;">
+                            <input id="searchinput" type="search" class="form-control">
+                            <span id="searchclear" class="glyphicon">
+                                <i class="fa fa-times"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered  table-condensed table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Mobile</th>
+                                        <th>Email Verified</th>
+                                        <th>Mobile Verified</th>
+                                        <th>Status</th>
+                                        <th>View Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of data">
+                                        <td>{{item.firstName+" "+item.lastName}}</td>
+                                        <td>{{item.email}}</td>
+                                        <td>{{item.mobile}}</td>
+                                        <td>{{item.emailVerify=='1'?'Yes':'No'}}</td>
+                                        <td>{{item.mobileVerify=='1'?'Yes':'No'}}</td>
+                                        <td>
+                                            <span style="cursor: pointer;" data-status="" (click)="statusChange(item)"
+                                                class="btn-smbadge badge  {{item.blockStatus == 'no' ? 'bg-green' : 'bg-red'}}">
+                                                {{item.blockStatus== 'no' ? 'active' : 'inactive'}}</span>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary" id="modalprintedit" (click)="getDetails(item)"
+                                                data-toggle="modal" data-target="#modal-form" title="View">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+
+            <div class="col-xs-12">
+                <!-- pager -->
+                <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                    <li [ngClass]="{disabled:pager.currentPage === 1}">
+                        <a (click)="setPage(1)">First</a>
+                    </li>
+                    <li [ngClass]="{disabled:pager.currentPage === 1}">
+                        <a (click)="setPage(pager.currentPage - 1)">Previous</a>
+                    </li>
+                    <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                        <a (click)="setPage(page)">{{page}}</a>
+                    </li>
+                    <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                        <a (click)="setPage(pager.currentPage + 1)">Next</a>
+                    </li>
+                    <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                        <a (click)="setPage(pager.totalPages)">Last</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<div class="modal fade" id="modal-form">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">{{pagetitle}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="">Name:</label> {{item.name}}
+                        </div>
+                        <div class="form-group">
+                            <label for="">Email Adress:</label> {{item.email}}
+                        </div>
+                        <div class="form-group">
+                            <label for="">Mobile No:</label> {{item.mobile}}
+                        </div>
+                        <div class="form-group">
+                            <label for="">Address:</label> {{item.address}}
+                        </div>
+                        <div class="form-group">
+                            <label for="">City:</label> {{item.city}}
+                        </div>
+                        <div class="form-group">
+                            <label for="">State:</label> {{item.state_long}} ({{item.state_short}})
+                        </div>
+                        <div class="form-group">
+                            <label for="">Zip code:</label> {{item.zip}}
+                        </div>
+                        <div class="form-group">
+                            <label for="">Account Verify:</label> {{item.email_verification=='verified'?'Yes':'No'}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

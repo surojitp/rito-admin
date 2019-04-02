@@ -1,0 +1,143 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h5 class="box-title">Pharmacy Management</h5>
+                        <button title="Add new" id="modal-add" class="btn btn-primary pull-right"  data-target="#modal-form" data-toggle="modal" (click)="addData()">
+                            <i class="fa fa-plus"></i> Add New</button>
+                    </div>
+                    <div class="search-box">
+                        <input type="text" class="form-control" id="" [(ngModel)]="search_zipcode" placeholder="Zipcode"/>
+                        <button type="button" (click)="listpharmacy()" class="btn btn-primary search-btn">Search</button>                        
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered  table-condensed table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Address</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of data">
+                                        <td>{{item.pharmacyname}}</td>
+                                        <td>{{item.address1}}<br/>{{item.city}}<br/>{{item.state}}</td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-primary margin-r-5" id="modaledit" (click)="getDetails(item)"
+                                                data-toggle="modal" data-target="#modal-form" title="Edit">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-primary margin-r-5" id="modaldelete" (click)="deleteData(item)"
+                                                title="Delete">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="data==null" class="text-center">
+                                        <td colspan="3"> No record found!</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<div class="modal fade" id="modal-form">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel" *ngIf="edit">{{pagetitle}}</h4>
+                <h4 class="modal-title" id="myModalLabel" *ngIf="edit!=true">Add Pharmacy</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="">Name *</label>
+                            <input type="text" class="form-control" id="" [(ngModel)]="item.pharmacyname" />
+                        </div>
+                        <div class="form-group">
+                            <label for="">Address 1 *</label>
+                            <input type="text" class="form-control" id="" [(ngModel)]="item.address1" />
+                        </div>
+                        <div class="form-group">
+                            <label for="">Address 2</label>
+                            <input type="text" class="form-control" id="" [(ngModel)]="item.address2" />
+                        </div>
+                        <div class="form-group">
+                            <label for="">City *</label>
+                            <input type="text" class="form-control" id="" [(ngModel)]="item.city" />
+                        </div>
+                        <div class="form-group">
+                            <label for="">State *</label>
+                            <input type="text" class="form-control" id="" [(ngModel)]="item.state" />
+                        </div>
+                        <div class="form-group">
+                            <label for="">Zip code *</label>
+                            <input type="text" class="form-control" id="" [(ngModel)]="item.zip" />
+                        </div>
+                        <div class="form-group">
+                            <label for="">Phone</label>
+                            <input type="text" class="form-control" id="" [(ngModel)]="item.phone" />
+                        </div>
+                        <div class="form-group">
+                            <label for="">PPNID</label>
+                            <input type="text" class="form-control" id="" [(ngModel)]="item.ppnid" />
+                        </div>
+                        <div class="form-group">
+                            <label for="">PAL ID</label>
+                            <input type="text" class="form-control" id="" [(ngModel)]="item.palid" />
+                        </div>
+                        <div class="form-group">
+                            <label for="">Sequence</label>
+                            <input type="text" class="form-control" id="" [(ngModel)]="item.sequence" />
+                        </div>
+                        <div class="form-group">
+                            <label for="">NCPDP ID</label>
+                            <input type="text" class="form-control" id="" [(ngModel)]="item.ncpdpid" />
+                        </div>
+                        <div class="form-group">
+                            <label for="">Pharmacy NPI</label>
+                            <input type="text" class="form-control" id="" [(ngModel)]="item.pharmacynpi" />
+                        </div>
+                        <div class="form-group">
+                            <label for="">Eff. Date</label>
+                            <ng-datepicker [(ngModel)]="item.effdate"  [options]="options" [isOpened]="true"></ng-datepicker>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Termed Date</label>
+                            <ng-datepicker [(ngModel)]="item.termeddate"  [options]="options" [isOpened]="true"></ng-datepicker>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" (click)="saveData()" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

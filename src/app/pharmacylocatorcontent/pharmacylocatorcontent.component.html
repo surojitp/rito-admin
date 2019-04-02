@@ -1,0 +1,92 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h5 class="box-title">Pharmacy Content Management</h5>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered  table-condensed table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of data">
+                                        <td [innerHtml]="item.title"></td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary" id="modalprintedit" (click)="getDetails(item)"
+                                                data-toggle="modal" data-target="#modal-form" title="Edit">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<div class="modal fade" id="modal-form">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">{{pagetitle}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="">Title</label>
+                            <input type="text" class="form-control" id="" [(ngModel)]="item.title"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Image</label>
+                            <input type="file" (change)="onSelectFile($event)"  accept="image/gif,image/jpeg,image/jpg,image/png">
+                        </div>
+                        <div class="form-group">
+                            <img *ngIf='privewfile' [src]="privewfile" ngClass="img-lg">
+                            <img *ngIf="!privewfile && item.image!=''" src="{{item.image}}" ngClass="img-lg">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Content</label>
+                            <ckeditor [(ngModel)]='item.content' [readonly]="false" debounce="500"></ckeditor>
+                        </div>
+                        <div class="form-group" *ngIf="item.gallery!=''">
+                            <label>gallery: </label>
+                            <select [(ngModel)]='item.gallery'>
+                                <option value="">--All--</option>
+                                <option *ngFor="let gallery of gallery_list" ngValue={{gallery._id}}>
+                                    {{gallery.title}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" (click)="saveData()" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
